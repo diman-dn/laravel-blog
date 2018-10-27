@@ -45,7 +45,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => public_path(), // меняем storage_path на public_path и убираем 'app'
         ],
 
         'public' => [
