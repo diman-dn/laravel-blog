@@ -15,4 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', 'Admin\DashboardController@index');
+// Объединение маршрутов по префиксу и неймспейсу
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    // Вместо Route::get('/admin', 'Admin\DashboardController@index');
+    Route::get('/', 'DashboardController@index');
+    Route::resource('/categories', 'CategoriesController');
+});

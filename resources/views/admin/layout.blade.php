@@ -7,7 +7,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link href="/css/admin.css" rel="stylesheet">
-
+    <style>
+        table.table form {display: inline-block;}
+        button.delete {background: transparent; border: none; color: #337ab7; padding: 0px;}
+    </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
