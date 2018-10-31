@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email'
     ];
 
     /**
@@ -60,7 +60,6 @@ class User extends Authenticatable
     {
         $user = new static;
         $user->fill($fields);
-        $user->password = bcrypt($fields['password']);
         $user->save();
 
         return $user;
@@ -73,8 +72,19 @@ class User extends Authenticatable
     public function edit($fields)
     {
         $this->fill($fields);
-        $this->password = bcrypt($fields['password']);
         $this->save();
+    }
+
+    /**
+     * Метод сохранения пароля если он был изменен
+     * @param $password
+     */
+    public function generatePassword($password)
+    {
+        if($password != null) {
+            $this->password = bcrypt($password);
+            $this->save();
+        }
     }
 
     /**
@@ -82,8 +92,18 @@ class User extends Authenticatable
      */
     public function remove()
     {
-        Storage::delete('uploads/' . $this->image);
+        $this->removeAvatar();
         $this->delete();
+    }
+
+    /**
+     * Метод удаления аватара пользователя, если он существует
+     */
+    public function removeAvatar()
+    {
+        if($this->avatar != null) {
+            Storage::delete('uploads/' . $this->avatar);
+        }
     }
 
     /**
@@ -95,10 +115,10 @@ class User extends Authenticatable
     {
         if($image == null) return 0;
 
-        Storage::delete('uploads/' . $this->image);
+        $this->removeAvatar();
         $filename = str_random(10) . '.' . $image->extension();
-        $image->saveAs('uploads', $filename);
-        $this->image = $filename;
+        $image->storeAs('uploads', $filename);
+        $this->avatar = $filename;
         $this->save();
     }
 
@@ -108,10 +128,10 @@ class User extends Authenticatable
      */
     public function getAvatar()
     {
-        if($this->image == null) {
+        if($this->avatar == null) {
             return '/img/no-avatar.png';
         }
-        return '/upload/' . $this->image;
+        return '/uploads/' . $this->avatar;
     }
 
     /**
