@@ -43,3 +43,6 @@ mix.scripts([
 mix.copy('resources/assets/admin/bootstrap/fonts', 'public/fonts');
 mix.copy('resources/assets/admin/dist/fonts', 'public/fonts');
 mix.copy('resources/assets/admin/dist/img', 'public/img');
+mix.copy('resources/assets/admin/plugins/iCheck/minimal/blue.png', 'public/css');
+mix.copy('resources/assets/admin/plugins/ckeditor', 'public/plugins/ckeditor');
+mix.copy('resources/assets/admin/plugins/ckfinder', 'public/plugins/ckfinder');

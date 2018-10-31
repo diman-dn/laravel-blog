@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -15,7 +16,7 @@ class Post extends Model
     const IS_FEATURED = 1;
     const IS_STANDART = 0;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'date'];
 
     /**
      * Связь поста с категорией
@@ -23,7 +24,8 @@ class Post extends Model
      */
     public function category()
     {
-        return $this->hasOne(Category::class);
+//        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -32,7 +34,7 @@ class Post extends Model
      */
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -93,8 +95,18 @@ class Post extends Model
     public function remove()
     {
         // Удаляем изображение, перед удалением поста
-        Storage::delete('uploads/' . $this->image);
+        $this->removeImage();
         $this->delete();
+    }
+
+    /**
+     * Метод удаления изображения поста, если оно существует
+     */
+    public function removeImage()
+    {
+        if($this->image != null) {
+            Storage::delete('uploads/' . $this->image);
+        }
     }
 
     /**
@@ -107,11 +119,11 @@ class Post extends Model
         if($image == null) return 0;
 
         // Удаляем старое изображение перед сохранением/обновлением нового изображения
-        Storage::delete('uploads/' . $this->image);
+        $this->removeImage();
         // Создаем имя для загружаемого изображения
         $filename = str_random(10) . '.' . $image->extension();
         // Сохраняем под новым именем в папку public/uploads
-        $image->saveAs('uploads', $filename);
+        $image->storeAs('uploads', $filename);
         // Сохраняем имя изображения в таблицу к посту
         $this->image = $filename;
         $this->save();
@@ -215,5 +227,40 @@ class Post extends Model
             return $this->setStandart();
         }
         return $this->setFeatured();
+    }
+
+    /**
+     * Метод форматирования даты в формат для БД
+     * @param $value
+     */
+    public function setDateAttribute($value)
+    {
+        $date = Carbon::createFromFormat('d/m/y', $value)->format('Y-m-d');
+        $this->attributes['date'] = $date;
+    }
+
+    /**
+     * Метод форматирования даты в формат для пользователей
+     * @param $value
+     * @return string
+     */
+    public function getDateAttribute($value)
+    {
+        return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/y');
+    }
+
+    /**
+     * Метод получения названия категории
+     * @return string
+     */
+    public function getCategoryTitle()
+    {
+        return $this->category != null ? $this->category->title : 'Нет категории';
+    }
+
+
+    public function getTagsTitles()
+    {
+        return !$this->tags->isEmpty() ? implode(', ', $this->tags->pluck('title')->all()) : 'Нет тегов';
     }
 }
