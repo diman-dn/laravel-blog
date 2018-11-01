@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 // Объединение маршрутов по префиксу и неймспейсу
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
