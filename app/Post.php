@@ -16,7 +16,7 @@ class Post extends Model
     const IS_FEATURED = 1;
     const IS_STANDART = 0;
 
-    protected $fillable = ['title', 'content', 'date'];
+    protected $fillable = ['title', 'content', 'date', 'description'];
 
     /**
      * Связь поста с категорией
@@ -136,7 +136,7 @@ class Post extends Model
     public function getImage()
     {
         if($this->image == null) {
-            return false;
+            return '/img/no-image.png';
         }
         return '/uploads/' . $this->image;
     }
@@ -258,9 +258,77 @@ class Post extends Model
         return $this->category != null ? $this->category->title : 'Нет категории';
     }
 
-
+    /**
+     * Метод получения массива тегов строкой
+     * @return string
+     */
     public function getTagsTitles()
     {
         return !$this->tags->isEmpty() ? implode(', ', $this->tags->pluck('title')->all()) : 'Нет тегов';
+    }
+
+    /**
+     * Метод получения id категории или null, если ее нет
+     * @return null
+     */
+    public function getCategoryID()
+    {
+        return $this->category != null ? $this->category->id : null;
+    }
+
+    /**
+     * Метод форматирования даты для фронт-енда
+     * @return string
+     */
+    public function getDate()
+    {
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
+    }
+
+    /**
+     * Метод проверки наличия предыдущего поста
+     * @return mixed
+     */
+    public function hasPrevious()
+    {
+        return self::where('id', '<', $this->id)->max('id');
+    }
+
+    /**
+     * Метод получения предыдущего поста
+     * @return mixed
+     */
+    public function getPrevious()
+    {
+        $postID = $this->hasPrevious(); // id
+        return self::find($postID);
+    }
+
+    /**
+     * Метод проверки наличия следующего поста
+     * @return mixed
+     */
+    public function hasNext()
+    {
+        return self::where('id', '>', $this->id)->min('id');
+    }
+
+    /**
+     * Метод получения следующего поста
+     * @return mixed
+     */
+    public function getNext()
+    {
+        $postID = $this->hasNext();
+        return self::find($postID);
+    }
+
+    /**
+     * Метод получения всех постов, кроме текущего
+     * @return static
+     */
+    public function related()
+    {
+        return self::all()->except($this->id);
     }
 }

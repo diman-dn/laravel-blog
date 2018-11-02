@@ -1,0 +1,6 @@
+1. Пагинация
+В методе, где необходима пагинация: $posts = Post::paginate(2);
+вывод пагинации во view: {{ $posts->links() }}
+*для изменения верстки дефолтной пагинации: $: php artisan vendor:publish --tag=laravel-pagination
+
+2.
