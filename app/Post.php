@@ -230,7 +230,7 @@ class Post extends Model
     }
 
     /**
-     * Метод форматирования даты в формат для БД
+     * Форматирование даты в формат для БД
      * @param $value
      */
     public function setDateAttribute($value)
@@ -240,7 +240,7 @@ class Post extends Model
     }
 
     /**
-     * Метод форматирования даты в формат для пользователей
+     * Форматирование даты в формат для пользователей
      * @param $value
      * @return string
      */
@@ -250,7 +250,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения названия категории
+     * Получение названия категории
      * @return string
      */
     public function getCategoryTitle()
@@ -259,7 +259,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения массива тегов строкой
+     * Получение массива тегов строкой
      * @return string
      */
     public function getTagsTitles()
@@ -268,7 +268,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения id категории или null, если ее нет
+     * Получение id категории или null, если ее нет
      * @return null
      */
     public function getCategoryID()
@@ -277,7 +277,7 @@ class Post extends Model
     }
 
     /**
-     * Метод форматирования даты для фронт-енда
+     * Форматирование даты для фронт-енда
      * @return string
      */
     public function getDate()
@@ -286,7 +286,7 @@ class Post extends Model
     }
 
     /**
-     * Метод проверки наличия предыдущего поста
+     * Проверка наличия предыдущего поста
      * @return mixed
      */
     public function hasPrevious()
@@ -295,7 +295,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения предыдущего поста
+     * Получение предыдущего поста
      * @return mixed
      */
     public function getPrevious()
@@ -305,7 +305,7 @@ class Post extends Model
     }
 
     /**
-     * Метод проверки наличия следующего поста
+     * Проверка наличия следующего поста
      * @return mixed
      */
     public function hasNext()
@@ -314,7 +314,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения следующего поста
+     * Получение следующего поста
      * @return mixed
      */
     public function getNext()
@@ -324,7 +324,7 @@ class Post extends Model
     }
 
     /**
-     * Метод получения всех постов, кроме текущего
+     * Получение всех постов, кроме текущего
      * @return static
      */
     public function related()
@@ -332,8 +332,39 @@ class Post extends Model
         return self::all()->except($this->id);
     }
 
+    /**
+     * Проверка наличия категории у поста
+     * @return bool
+     */
     public function hasCategory()
     {
         return $this->category != null ? true : false;
+    }
+
+    /**
+     * Получить популярные посты
+     * @return mixed
+     */
+    public static function getPopularPosts()
+    {
+        return self::orderBy('views', 'desc')->take(3)->get();
+    }
+
+    /**
+     * Получить рекомендуемые посты
+     * @return mixed
+     */
+    public static function getFeaturedPosts()
+    {
+        return self::where('is_featured', 1)->take(3)->get();
+    }
+
+    /**
+     * Получить недавние посты
+     * @return mixed
+     */
+    public static function getRecentPosts()
+    {
+        return self::orderBy('date', 'desc')->take(4)->get() ;
     }
 }
