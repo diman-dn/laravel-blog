@@ -17,10 +17,8 @@
                         </div>
                         <div class="post-content">
                             <header class="entry-header text-center text-uppercase">
-                                <h6><a href="#">{{ $post->getCategoryTitle() }}</a></h6>
-
+                                @include('partials._category', ['post' => $post])
                                 <h1 class="entry-title"><a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a></h1>
-
 
                             </header>
                             <div class="entry-content">

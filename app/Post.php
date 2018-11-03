@@ -331,4 +331,9 @@ class Post extends Model
     {
         return self::all()->except($this->id);
     }
+
+    public function hasCategory()
+    {
+        return $this->category != null ? true : false;
+    }
 }
