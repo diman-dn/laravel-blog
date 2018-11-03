@@ -16,8 +16,21 @@ Route::get('/post/{slug}', 'HomeController@show')->name('post.show');
 Route::get('/tag/{slug}', 'HomeController@tag')->name('tag.show');
 Route::get('/category/{slug}', 'HomeController@category')->name('category.show');
 
+// Группа путей для вошедших пользователей
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/logout', 'AuthController@logout');
+});
+
+// Группа путей для гостей
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/register', 'AuthController@registerForm');
+    Route::post('/register', 'AuthController@register');
+    Route::get('/login', 'AuthController@loginForm');
+    Route::post('/login', 'AuthController@login');
+});
+
 // Объединение маршрутов по префиксу и неймспейсу
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
     // Вместо Route::get('/admin', 'Admin\DashboardController@index');
     Route::get('/', 'DashboardController@index');
     Route::resource('/categories', 'CategoriesController');

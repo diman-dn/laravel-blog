@@ -37,22 +37,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="/images/logo.png" alt=""></a>
+                <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
             </div>
 
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav text-uppercase">
-                    <li><a href="#">Homepage</a></li>
-                    <li><a href="about-me.html">ABOUT ME </a></li>
-                    <li><a href="contact.html">CONTACT</a></li>
+                    <li><a href="/">Homepage</a></li>
+                    <li><a href="/about">ABOUT ME </a></li>
+                    <li><a href="/contact">CONTACT</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav text-uppercase pull-right">
-                    <li><a href="#">Register</a></li>
-                    <li><a href="about-me.html">Login</a></li>
-                    <li><a href="contact.html">My profile</a></li>
+                    @if(Auth::check())
+                        <li><a href="/profile">My profile</a></li>
+                        <li>
+                            <form method="post" action="/logout">
+                                {{ csrf_field() }}
+                                <button class="btn btn-light">Logout</button>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="/register">Register</a></li>
+                        <li><a href="/login">Login</a></li>
+                    @endif
                 </ul>
 
             </div>
