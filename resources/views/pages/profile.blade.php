@@ -31,6 +31,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12">
+                                    <input type="text" name="text_status" class="form-control" id="text_status" placeholder="Status text" value="{{ $user->text_status }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 </div>
                             </div>
@@ -40,6 +45,7 @@
                                     <input type="file" class="form-control" id="image" name="avatar">
                                 </div>
                             </div>
+                            <div><p>Дата последнего изменения: {{ $user->updated_at }}</p></div>
                             <button type="submit" class="btn send-btn">Update</button>
 
                         </form>

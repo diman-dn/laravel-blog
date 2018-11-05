@@ -1,7 +1,7 @@
 <ul class="sidebar-menu">
     <li class="header">MAIN NAVIGATION</li>
     <li class="treeview">
-        <a href="#">
+        <a href="/admin">
             <i class="fa fa-dashboard"></i> <span>Админ-панель</span>
         </a>
     </li>
@@ -9,10 +9,10 @@
     <li><a href="{{ route('categories.index') }}"><i class="fa fa-list-ul"></i> <span>Категории</span></a></li>
     <li><a href="{{ route('tags.index') }}"><i class="fa fa-tags"></i> <span>Теги</span></a></li>
     <li>
-        <a href="#">
+        <a href="/admin/comments">
             <i class="fa fa-commenting"></i> <span>Комментарии</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">5</small>
+              <small class="label pull-right bg-green">{{ $newCommentsCount }}</small>
             </span>
         </a>
     </li>

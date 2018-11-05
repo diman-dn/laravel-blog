@@ -38,6 +38,15 @@ class Post extends Model
     }
 
     /**
+     * Связь поста с комментариями
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Связь поста с тегами
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -366,5 +375,14 @@ class Post extends Model
     public static function getRecentPosts()
     {
         return self::orderBy('date', 'desc')->take(4)->get() ;
+    }
+
+    /**
+     * Получить все одобренные комментарии для текущего поста
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments()->where('status', 1)->get();
     }
 }

@@ -53,10 +53,12 @@
                     @if(Auth::check())
                         <li><a href="/profile">My profile</a></li>
                         <li>
-                            <form method="post" action="/logout">
-                                {{ csrf_field() }}
-                                <button class="btn btn-light">Logout</button>
-                            </form>
+                            <div class="pull-right">
+                                <form method="post" action="/logout">
+                                    {{ csrf_field() }}
+                                    <button class="btn btn-light">Logout ({{ Auth::user()->name }})</button>
+                                </form>
+                            </div>
                         </li>
                     @else
                         <li><a href="/register">Register</a></li>

@@ -34,6 +34,10 @@
                             <input type="email" name="email" class="form-control" placeholder="Ваш email" value="{{ $user->email }}">
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Текст статуса</label>
+                            <input type="text" name="text_status" class="form-control" placeholder="Ваш статус" value="{{ $user->text_status }}">
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Пароль</label>
                             <input type="password" name="password" class="form-control" placeholder="Пароль">
                         </div>
@@ -44,6 +48,7 @@
 
                             <p class="help-block">Ваше изображение профиля..</p>
                         </div>
+                        <div><p>Дата последнего изменения: {{ $user->updated_at }}</p></div>
                     </div>
                 </div>
                 <!-- /.box-body -->

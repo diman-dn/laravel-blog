@@ -9,6 +9,10 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+    /**
+     * Страница управления профилем пользователя
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $user = Auth::user();
@@ -18,6 +22,11 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * Метод сохранения обновленной информации о пользователе
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -27,7 +36,7 @@ class ProfileController extends Controller
                 'email',
                 Rule::unique('users')->ignore(Auth::user()->id)
             ],
-//            'password' => 'required',
+            'text_status' => 'nullable|max:255',
             'avatar' => 'nullable|image'
         ]);
 

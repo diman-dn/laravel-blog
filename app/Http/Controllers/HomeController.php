@@ -34,6 +34,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * Posts list by tag
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function tag($slug)
     {
         $tag = Tag::where('slug', $slug)->firstOrFail();
@@ -43,6 +48,11 @@ class HomeController extends Controller
         ]);
     }
 
+    /**
+     * Posts list by category
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function category($slug)
     {
         $category = Category::where('slug', $slug)->firstOrFail();
