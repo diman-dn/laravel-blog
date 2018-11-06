@@ -38,6 +38,22 @@
                             <input type="password" name="password" class="form-control" placeholder="Пароль">
                         </div>
                         <div class="form-group">
+                            <label>
+                                <input type="checkbox" class="minimal" name="is_admin">
+                            </label>
+                            <label>
+                                Админ
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" class="minimal" name="status">
+                            </label>
+                            <label>
+                                Забанен
+                            </label>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputFile">Аватар</label>
                             <input type="file" name="avatar" id="exampleInputFile">
 

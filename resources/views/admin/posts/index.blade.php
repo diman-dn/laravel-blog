@@ -35,6 +35,8 @@
                             <th>Название</th>
                             <th>Категория</th>
                             <th>Теги</th>
+                            <th>Рекомендован</th>
+                            <th>Опубликован</th>
                             <th>Картинка</th>
                             <th>Действия</th>
                         </tr>
@@ -46,6 +48,8 @@
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->getCategoryTitle() }}</td>
                                 <td>{{ $post->getTagsTitles() }}</td>
+                                <td>{{ $post->is_featured == 1 ? 'Yes' : 'No' }}</td>
+                                <td>{{ $post->status == 1 ? 'No' : 'Yes' }}</td>
                                 <td>
                                     <img src="{{ $post->getImage() }}" alt="" width="100">
                                 </td>

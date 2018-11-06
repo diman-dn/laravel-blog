@@ -6,11 +6,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    @if(session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <article class="post">
                         <div class="post-thumb">
                             <img src="{{ $post->getImage() }}" alt="">

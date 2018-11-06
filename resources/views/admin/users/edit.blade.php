@@ -42,6 +42,22 @@
                             <input type="password" name="password" class="form-control" placeholder="Пароль">
                         </div>
                         <div class="form-group">
+                            <label>
+                                {{Form::checkbox('is_admin', '1', $user->is_admin, ['class' => 'minimal'])}}
+                            </label>
+                            <label>
+                                Админ
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                {{Form::checkbox('status', '1', $user->status, ['class' => 'minimal'])}}
+                            </label>
+                            <label>
+                                Забанен
+                            </label>
+                        </div>
+                        <div class="form-group">
                             <img src="{{ $user->getAvatar() }}" alt="" width="100" class="img-responsive">
                             <label for="exampleInputFile">Аватар</label>
                             <input type="file" name="avatar" id="exampleInputFile">

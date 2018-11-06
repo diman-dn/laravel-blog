@@ -44,11 +44,14 @@ class UsersController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'avatar' => 'nullable|image'
+            'avatar' => 'nullable|image',
+            'is_admin' => 'nullable'
         ]);
         $user = User::add($request->all());
         $user->generatePassword($request->get('password'));
         $user->uploadAvatar($request->file('avatar'));
+        $user->toggleAdmin($request->get('is_admin'));
+        $user->toggleBan($request->get('status'));
         return redirect()->route('users.index');
     }
 
@@ -84,11 +87,15 @@ class UsersController extends Controller
                 // Решение проблемы с уникальностью своего же email
                 Rule::unique('users')->ignore($user->id),
             ],
-            'avatar' => 'nullable|image'
+            'avatar' => 'nullable|image',
+            'is_admin' => 'nullable',
+            'status' => 'nullable'
         ]);
         $user->edit($request->all());
         $user->generatePassword($request->get('password'));
         $user->uploadAvatar($request->file('avatar'));
+        $user->toggleAdmin($request->get('is_admin'));
+        $user->toggleBan($request->get('status'));
         return redirect()->route('users.index');
     }
 
